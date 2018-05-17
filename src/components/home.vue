@@ -88,6 +88,14 @@ export default {
 				                 }
 				            }
 						});
+						
+				/*var _this = this  
+		        var params = new URLSearchParams() 
+		        params.append('status', '1') 
+		        axios.post('https://cathkid.com/data/admindata.php',params)
+		          .then(function (response) {
+		             console.info(response);
+		          })*/		
        },
     	methods:{
 	  	  back:function(url,num){

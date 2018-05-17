@@ -115,7 +115,7 @@ export default {
 	.choice ul li img{
 		width: 18px;
 		height: 18px;
-		margin: 2px;
+		margin: 3px;
 	}
 	.info-list{
 		border-top: 1px solid #000;
