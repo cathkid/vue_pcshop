@@ -210,7 +210,21 @@ export default {
 	    left: 0px;
 	    right: auto;
 	}
-	
+	.swiper-button-next, .swiper-button-prev {
+    	background-size: 44px 44px;
+	}
+	.swiper-pagination-bullet {
+	    width: 15px;
+	    height: 15px;
+	    display: inline-block;
+	    border-radius: 100%;
+	    background: #000;
+	    opacity: .2;
+	}
+	.swiper-pagination-bullet-active {
+	    opacity: 1;
+	    background: #ea5514;
+	}
 	.img-border{
 		margin: 10px 40px 10px 40px;
 	    border: 1px dashed #ea5514;

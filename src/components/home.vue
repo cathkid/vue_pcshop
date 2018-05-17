@@ -178,10 +178,12 @@ export default {
 .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
     -webkit-box-shadow: -10px 0px 21px #000;
     box-shadow: -10px 0px 21px #000;
+    right: 0px;
 }
 .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
     -webkit-box-shadow: 10px 0px 21px #000;
     box-shadow: 10px 0px 21px #000;
+    left: 0px;
 }
 .swiper-button-next, .swiper-button-prev {
     background-color: #000;
@@ -199,5 +201,11 @@ export default {
     background-size: 44px 44px;
     background-position: center;
     background-repeat: no-repeat;
+}
+.swiper-pagination-bullet{
+	height: 15px;
+}
+.swiper-pagination-bullet-active{
+	background: #ea5514 !important;
 }
 </style>
