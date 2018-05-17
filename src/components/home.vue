@@ -55,7 +55,6 @@
 
 <script>
 import Swiper from 'swiper';
-import 'swiper/dist/css/swiper.min.css';
 export default {
   name: 'index',
   data () {
@@ -189,6 +188,7 @@ export default {
     background-color: #000;
     background-repeat: no-repeat;
     opacity: 0.3;
+    width: 40px;
 }
 .swiper-button-next, .swiper-button-prev {
     position: absolute;
@@ -202,10 +202,22 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
 }
+.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+	    background-image: url(../assets/arrow-right.png);
+	    right: 0px;
+	    left: auto;
+	}
+	.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+		background-image: url(../assets/arrow-left.png);
+	    left: 0px;
+	    right: auto;
+	}
+	
 .swiper-pagination-bullet{
 	height: 15px;
 }
-.swiper-pagination-bullet-active{
-	background: #ea5514 !important;
-}
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    background-color: #ea5514 !important;
+}	
 </style>
