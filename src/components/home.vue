@@ -89,13 +89,13 @@ export default {
 				            }
 						});
 						
-				/*var _this = this  
+				var _this = this  
 		        var params = new URLSearchParams() 
 		        params.append('status', '1') 
-		        axios.post('https://cathkid.com/data/admindata.php',params)
+		        axios.post('/system/api.php?act=main',params)
 		          .then(function (response) {
 		             console.info(response);
-		          })*/		
+		          }) 	
        },
     	methods:{
 	  	  back:function(url,num){
