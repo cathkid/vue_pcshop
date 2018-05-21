@@ -4,10 +4,7 @@
   <!-- Swiper -->
   <div class="swiper-container">
     <div class="swiper-wrapper">
-        <div class="swiper-slide" style="background: url(http://image.whistlerp.com/qqbg/2/banner/39/20180125102052_899.jpg) no-repeat center center;background-size: 100% 100%;"> </div>
-	    <div class="swiper-slide" style="background: url(http://image.whistlerp.com/qqbg/2/banner/37/20180125102207_772.jpg) no-repeat center center;background-size: 100% 100%;"> </div>
-	    <div class="swiper-slide" style="background: url(http://image.whistlerp.com/qqbg/2/banner/39/20180125102052_899.jpg) no-repeat center center;background-size: 100% 100%;"> </div>
-	    <div class="swiper-slide" style="background: url(http://image.whistlerp.com/qqbg/2/banner/37/20180125102207_772.jpg) no-repeat center center;background-size: 100% 100%;"> </div>
+        <div v-for="item in bannerlist"  class="swiper-slide" v-bind:style="{ 'background-image': 'url(' + item.img_url + ')','background-repeat':'no-repeat','background-size':'100% 100%' }"> </div>
     </div>
     <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
@@ -17,35 +14,15 @@
   </div>
   
   <div class="home-product">
-  	<h5> FEATURED ITEMS </h5>
+  	<h5> FEATURED ITEMS  </h5>
   	<ul>
-  		<li @click="back('/index1/product')" >
-  			<img src="http://image.whistlecms.com/oms/goods/2482CCFL0498/2482CCFL0498-01.jpg" />
-  			<h4>GHIDINI 1961</h4>
-  			<h4>HKD $ 1,000</h4>
-  		</li>
-  		<li>
-  			<img src="http://image.whistlecms.com/oms/goods/2482CCFL0498/2482CCFL0498-01.jpg" />
-  			<h4>GHIDINI 1961</h4>
-  			<h4>HKD $ 1,000</h4>
-  		</li>
-  		<li>
-  			<img src="http://image.whistlecms.com/oms/goods/2482CCFL0498/2482CCFL0498-01.jpg" />
-  			<h4>GHIDINI 1961</h4>
-  			<h4>HKD $ 1,000</h4>
-  		</li>
-  		<li>
-  			<img src="http://image.whistlecms.com/oms/goods/2482CCFL0498/2482CCFL0498-01.jpg" />
-  			<h4>GHIDINI 1961</h4>
-  			<h4>HKD $ 1,000</h4>
-  		</li>
-  		<li>
-  			<img src="http://image.whistlecms.com/oms/goods/2482CCFL0498/2482CCFL0498-01.jpg" />
-  			<h4>GHIDINI 1961</h4>
-  			<h4>HKD $ 1,000</h4>
+  		<li   v-for="item in productlist.slice(0,5)" >
+  			<img  @click="toproduct('/index1/product',item.id)"  v-bind:src='item.img' />
+  			<h4>{{item.name}}</h4>
+  			<h4>HKD $ {{item.price}}</h4>
   		</li>
   	</ul>
-  	<div  @click="back('/index1/brand_list')"  class="home-product-more"> MORE </div>
+  	<div  @click="back('/index1/index_list')"  class="home-product-more"> MORE </div>
   </div>
 
 
@@ -59,11 +36,39 @@ export default {
   name: 'index',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      bannerlist:[],
+      productlist:[],
+      mess:'this is a page'
     }
   },
    mounted() {
-   			    var swiper = new Swiper('.swiper-container',{
+		this.getinfo(); 
+       },
+   updated() {  
+        this.setswiper();  
+  },  
+    	methods:{
+	  	  	back:function(url,num){
+	  			this.$router.push({ path:url })
+	  		},
+	  		toproduct:function(url,value){
+	  			console.info(value);
+	  			this.$router.push({ path:url,query:value })
+	  		},
+		  	getinfo:function(){
+				var _this = this  
+		        var params = new URLSearchParams() 
+		        params.append('status', '1') 
+		        axios.post('/system/api.php?act=main',params)
+		          .then(function (response) {
+		          	 _this.bannerlist = response.data.banner_list;
+		          	 _this.productlist = response.data.topic_result.goods_array;
+		             console.info(response.data.banner_list );
+		             
+		          }) 	
+			},
+			setswiper:function(){
+					    var swiper = new Swiper('.swiper-container',{
 						autoplay:3000,
 						speed:1000,
 						autoplayDisableOnInteraction : false,
@@ -78,29 +83,10 @@ export default {
 					  navigation: {
 					    nextEl: '.swiper-button-next',
 					    prevEl: '.swiper-button-prev',
-					  },
-						onInit:function(swiper){
-							swiper.slides[2].className="swiper-slide swiper-slide-active";//第一次打开不要动画
-							},
-				        breakpoints: { 
-				                668: {
-				                    slidesPerView: 1,
-				                 }
-				            }
-						});
-						
-				var _this = this  
-		        var params = new URLSearchParams() 
-		        params.append('status', '1') 
-		        axios.post('/system/api.php?act=main',params)
-		          .then(function (response) {
-		             console.info(response);
-		          }) 	
-       },
-    	methods:{
-	  	  back:function(url,num){
-	  			this.$router.push({ path:url })
-	  		} 
+					  } 
+					});
+			}
+	  		
  		 }
 }
 </script>

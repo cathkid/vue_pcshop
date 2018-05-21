@@ -6,8 +6,10 @@ import home from '@/components/home'
 import categories from '@/components/categories'
 import brand from '@/components/brand'
 import brand_list from '@/components/brand_list'
+import index_list from '@/components/index_list'
 import product from '@/components/product'
 import about from '@/components/about'
+import bbs from '@/components/bbs'
 Vue.use(Router)
  
 export default new Router({
@@ -52,6 +54,13 @@ export default new Router({
 			                }
 			            },
 			            {
+			                path: "index_list",
+			                component: index_list,
+			                meta: {
+			                  requiresAuth: true,
+			                }
+			            },
+			            {
 			                path: "product",
 			                component: product,
 			                meta: {
@@ -61,6 +70,13 @@ export default new Router({
 			            {
 			                path: "about",
 			                component: about,
+			                meta: {
+			                  requiresAuth: true,
+			                }
+			            },
+			            {
+			                path: "bbs",
+			                component: bbs,
 			                meta: {
 			                  requiresAuth: true,
 			                }

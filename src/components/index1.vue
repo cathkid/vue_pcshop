@@ -9,7 +9,7 @@
 				   	  	 <li @click="back('/index1/categories',2)" v-bind:class="{ active: isActive2 }"> CATEGORIES</li>
 				   	  	 <li @click="back('/index1/brand',3)"  v-bind:class="{ active: isActive3}"> BRANDS</li>
 				   	  </ul>
-				   	  <div class="service-box">
+				   	  <div @click="back('/index1/bbs')" class="service-box">
 				   	  		<p>Customer <br/>Services</p>
 				   	  </div>
 				   </div>

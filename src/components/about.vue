@@ -1,9 +1,8 @@
 <template>
 <div class="main">
 	 <div class="brand-box">
-	 		<div class="about-box">about us 	</div> 		
+	 		<div class="about-box" v-html='content'> </div> 		
 	 </div>
-	 
 </div> 
 </template>
 
@@ -12,16 +11,27 @@ export default {
   name: 'about',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      content:'',
     }
   	},
    	mounted() {
-   	
+   		this.getinfo();
     },  
     methods:{
-  	  back:function(url,num){
+  	  	back:function(url,num){
   			this.$router.push({ path:url })
-  		} 
+  		},
+	  	getinfo:function(){
+			var _this = this  
+	        var params = new URLSearchParams() 
+	        params.append('status', '1') 
+	        axios.post('/system/api.php?act=article_detail&article_id=1',params)
+	          .then(function (response) {
+	          	 _this.content = response.data.content;
+	             console.info(response.data );
+	          }) 	
+		} 
   }
 }
 </script>
@@ -40,5 +50,6 @@ export default {
 	}
 	.about-box{
 		margin-top: 40px;
+		margin-bottom: 50px;
 	}
 </style>

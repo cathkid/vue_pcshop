@@ -5,9 +5,11 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import vPage from 'v-page';
 
 Vue.config.productionTip = false
 window.axios = axios 
+Vue.use(vPage);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -73,7 +73,7 @@ export default {
     }
   },
    mounted() {
-   	     var swiper = new Swiper('.swiper-container', {
+   	  	var swiper1 = new Swiper('.swiper-container', {
 	      slidesPerView: 1,
 	      spaceBetween: 30,
 	      loop: true,
@@ -86,7 +86,16 @@ export default {
 	        prevEl: '.swiper-button-prev',
 	      },
 	    });
-  } 
+	    
+   	  console.info(this.$route.query[0]); 
+  },
+  updated(){
+  	 //this.setswiper();  
+  },
+  methods:{
+  	 setswiper:function(){
+  	 }
+  }
  
 }
 </script>
