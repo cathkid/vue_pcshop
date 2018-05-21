@@ -8,7 +8,7 @@
 	 		 	<div  v-for="item in brand_list"  class="item">
 	 		 		<p>{{item.key}}</p>
 	 		 		<ul>
-	 		 			<li v-for="itemlist in item.value"   @click="toproduct('/index1/brand_list',itemlist.id)">{{itemlist.name}}</li>
+	 		 			<li v-for="itemlist in item.value"   @click="toproduct('/index1/brand_list',itemlist.id)">{{itemlist.name}} {{itemlist.id}}</li>
 	 		 		</ul>
 	 		 	</div>
 	 		 	
