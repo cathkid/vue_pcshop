@@ -127,9 +127,12 @@ p {
 	cursor: pointer;
 }
 .head-box{
-	 width:100%;
-	 height: 80px;
-	 margin-top: 0px;
+	width: 100%;
+	height: 80px;
+	margin-top: 0;
+	position: fixed;
+	background: #fff;
+	top: 0;
 }
 .head-box-center{
 	 width:1366px;

@@ -1,20 +1,19 @@
 <template>
 <div class="main">
 	 <div class="brand-box">
-	 		<ul class="title"><li> ALL </li><li>#</li><li>&</li><li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li><li>G</li><li>H</li><li>I</li><li>J</li><li>K</li><li>L</li><li>M</li><li>N</li><li>O</li><li>P</li><li>Q</li><li>R</li><li>S</li><li>T</li><li>U</li><li>V</li><li>W</li><li>X</li><li>Y</li><li>Z</li></ul>
+	 		<ul class="title"><li v-for="item in brand_key" class="brands_key">{{item}}</li></ul>
 	 
 	 		 <div class="brand-content">
 	 		 	
 	 		 	<div  v-for="item in brand_list"  class="item">
-	 		 		<p>{{item.key}}</p>
+	 		 		<p class="brands_content">{{item.key}}</p>
 	 		 		<ul>
-	 		 			<li v-for="itemlist in item.value"   @click="toproduct('/index1/brand_list',itemlist.id)">{{itemlist.name}} {{itemlist.id}}</li>
+	 		 			<li v-for="itemlist in item.value"   @click="toproduct('/index1/brand_list',itemlist.id)">{{itemlist.name}}</li>
 	 		 		</ul>
 	 		 	</div>
 	 		 	
 	 		 </div>
 	 </div>
-	 
 </div> 
 </template>
 
@@ -26,7 +25,8 @@ export default {
   data () {
 	    return {
 	      msg: 'Welcome to Your Vue.js App',
-	      brand_list:[]
+	      brand_list:[],
+	      brand_key:['#','&','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
 	    }
   	},
    	mounted() {
@@ -36,23 +36,43 @@ export default {
   	  back:function(url,num){
   			this.$router.push({ path:url })
   		},
+  		backfind:function(item){
+  			console.info(item);
+  			console.info(this.$refs.brandlist);
+  		},
   		toproduct:function(url,value){
 	  			console.info(value);
-	  			this.$router.push({ path:url,query:value })
+	  			this.$router.push({ path:url,query:{code:value}})
 	  	},
-  	getinfo:function(){
-			var _this = this  
-	        var params = new URLSearchParams() 
-	        params.append('status', '1') 
-	        axios.post('/system/api.php?act=brand_list',params)
-	          .then(function (response) {
-	          	 _this.brand_list = response.data;
-	             console.info(response.data );
-	             
-	          }) 	
-		}
+	  	getinfo:function(){
+				var _this = this  
+		        var params = new URLSearchParams() 
+		        params.append('status', '1') 
+		        axios.post('/system/api.php?act=brand_list',params)
+		          .then(function (response) {
+		          	 _this.brand_list = response.data;
+		             console.info(response.data );
+		             
+		          }) 	
+			}
   	}
 }
+
+console.info('sadfasdfas');
+
+var mykey = document.getElementsByClassName('brands_key');
+var mycontent = document.getElementsByClassName('brands_content');
+
+ 
+mykey.onclick = function(){
+	for(var a = 0; a < mycontent ){
+		
+	}
+	
+	mykey.value
+ 
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -106,9 +126,14 @@ export default {
 		margin: auto;
 	}
 	.brand-box .title {
-		width: 800px;
-		margin: 30px auto;
-		height: 20px;
+	    width: 800px;
+	    margin: 30px auto;
+	    height: 20px;
+	    position: fixed;
+	    left: 50%;
+	    top: 50px;
+	    margin-left: -400px;
+	    background-color: #fff;
 	}
 	.brand-box .title li{
 		float: left;

@@ -5,8 +5,7 @@
 	 		 <!-- Swiper -->
 			  <div class="swiper-container">
 			    <div class="swiper-wrapper">
-			      <div class="swiper-slide"><div class="img-border"><img src="http://image.whistlecms.com/oms/758/goods/20180403/PC_20180403100150_719617.png"></div></div>
-			      <div class="swiper-slide"><div class="img-border"><img src="http://image.whistlecms.com/oms/758/goods/20180309/PC_20180309174423_486300.jpg"></div></div>
+			      <div class="swiper-slide" v-for="item in product.product" ><div class="img-border"><img v-bind:src='item.img'></div></div>
 			    </div>
 			    <!-- Add Pagination -->
 			    <div class="swiper-pagination"></div>
@@ -15,28 +14,22 @@
 			    <div class="swiper-button-prev"></div>
 			  </div>
 			  
-			  <div class="choice">
+			  <div class="choice" v-show="isshow">
 			  	<ul>
-			  		<li>
-			  			<img src="http://image.whistlecms.com/oms/758/goods/20180403/PC_20180403100150_719617.png">
-			  		</li>
-			  		<li>
-			  			<img src="../assets/icon3.png">
-			  		</li>
-			  		<li>
-			  			<img src="../../build/logo.png">
+			  		<li v-for="item in product.product">
+			  			<img v-bind:src='item.img'>
 			  		</li>
 			  	</ul>
 			  </div>
 	 	</div>
 	 	<div class="product-info">
 	 		<div class="title-box">
-	 			<h5>GHIDINI 1961</h5>
-	 			<p>RABBIT BRASS Doorstop</p>
-	 			<p>tyle 2122121</p>
+	 			<h5>{{product.name}}</h5>
+	 			<p>{{product.brand_name}}</p>
+	 			<p>{{product.goods_supplier_sn}}</p>
 	 		</div>
 	 		<div class="money"> 
-	 			<h5>HKD $ 1,000</h5>
+	 			<h5>HKD $ {{product.price}}</h5>
 	 		</div>
 	 		<div class="size">
 	 			<img src="../assets/size.png" />
@@ -45,17 +38,17 @@
 	 		
 	 		<div class="info-list">
 	 			<h5>DESCRIPTION</h5>
-	 			<P>Offering a striking contrast between mass and lightness, this Tondo bowl from RabLabs is crafted by a Tuscan artisan with a multi-generational history of working with marble. Each design is hand-carved and takes months to produce, ensuring every piece is wholly unique. </P>
+	 			<P v-html="product.descs"> </P>
 	 		</div>
 	 		
 	 		<div class="info-list">
 	 			<h5>PRODUCT INFORMATION</h5>
-	 			<P>Offering a striking contrast between mass and lightness, this Tondo bowl from RabLabs is crafted by a Tuscan artisan with a multi-generational history of working with marble. Each design is hand-carved and takes months to produce, ensuring every piece is wholly unique. </P>
+	 			<P v-html="intraduction_en">  </P>
 	 		</div>
 	 		
 	 		<div class="info-list">
 	 			<h5>SHIPPING & RETURN</h5>
-	 			<P>Offering a striking contrast between mass and lightness, this Tondo bowl from RabLabs is crafted by a Tuscan artisan with a multi-generational history of working with marble. Each design is hand-carved and takes months to produce, ensuring every piece is wholly unique. </P>
+	 			<P v-html="product.shipping_instructions_en"></P>
 	 		</div>
 	 	</div>
 	 </div>
@@ -69,11 +62,20 @@ export default {
   name: 'index',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      product:[],
+      isshow:true
     }
   },
    mounted() {
-   	  	var swiper1 = new Swiper('.swiper-container', {
+   	  this.getinfo();
+  },
+  updated(){
+  	 this.setswiper();  
+  },
+  methods:{
+  	 setswiper:function(){
+  	 	var swiper1 = new Swiper('.swiper-container', {
 	      slidesPerView: 1,
 	      spaceBetween: 30,
 	      loop: true,
@@ -86,15 +88,21 @@ export default {
 	        prevEl: '.swiper-button-prev',
 	      },
 	    });
-	    
-   	  console.info(this.$route.query[0]); 
-  },
-  updated(){
-  	 //this.setswiper();  
-  },
-  methods:{
-  	 setswiper:function(){
-  	 }
+  	 },
+  	 getinfo:function(){
+		var _this = this  
+        var params = new URLSearchParams() 
+        params.append('status', '1') 
+        axios.post('/system/api.php?act=item_detail&item_id='+this.$route.query.code,params)
+          .then(function (response) {
+          	 _this.product = response.data;
+          	 if( response.data.product.length = 1){
+          	 	_this.isshow = false;
+          	 }
+             console.info(response.data );
+             
+          }) 	
+	}
   }
  
 }
@@ -112,6 +120,7 @@ export default {
 		height: 28px;
 		width: 400px;
 		margin: 40px auto;
+		text-align: center;
 	}
 	.choice ul li {
 		height: 25px;
@@ -208,6 +217,7 @@ export default {
        .swiper-slide{
        	height: 400px;
        	width: 400px;
+       	margin: auto;
     }
     .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
 	    background-image: url(../assets/arrow-right1.png);

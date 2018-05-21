@@ -3,17 +3,17 @@
 	 <div class="brand-box">
 	 	<div class="brandlist-title">
 	 		<div class="left">
-	 			ALESSI
+	 			{{name}}
 	 		</div>
 	 		<div class="right">
 	 			<h5>ABOUT THE BRAND</h5>
-	 			<p>Michael Aram is an American artist who discovered the rich traditions of metalworking after a life-defining trip to India. With metal at its core, the oponymous brand designs objects ranging from tableware to furniture; employing the unique skills of craftsmen who have melded their own lives upon such work.</p>
+	 			<p>{{descs}}</p>
 	 		</div>
 	 	</div>		
 	 	
 	 	<div class="brandlist-content">
 	 		<ul>
-	 			<li  v-for="item in brand_list">
+	 			<li  v-for="item in brand_list" @click="toproduct('/index1/product',item.id)">
 	 				<img v-bind:src='item.img' >
 	 				<!--<h5>JONATHAN ADLER</h5>-->
 	 				<p>{{item.name}}</p>
@@ -43,29 +43,36 @@ export default {
         language: 'en',//default: 'cn'
         pageSizeMenu: [10,10]//default: [10, 20, 50, 100]
       },
-       isShow:true
+       isShow:true,
+       descs:'',
+       name:''
     }
   },
    mounted() {
-   	  console.info(this.$route.query[0]); 
+   	  console.info(this.$route.query.code); 
    	  this.getinfo();
   },
   methods:{
-  	getinfo:function(){
+  	getinfo:function(info){
 				var _this = this  
 		        var params = new URLSearchParams() 
 		        params.append('status', '1') 
-		        axios.post('/system/api.php?act=brand_goods_list&brand_id='+this.$route.query[0]+'&curPage=1',params)
+		        axios.post('/system/api.php?act=brand_goods_list&brand_id='+this.$route.query.code+'&curPage='+info.pageNumber,params)
 		          .then(function (response) {
 		          	 _this.brand_list = response.data.goods_list;
 		          	 _this.pageSet.totalRow = response.data.page_info.totalPage * response.data.page_info.pageSize;
-		          	 
+		          	 _this.descs = response.data.brand.descs;
+		          	 _this.name = response.data.brand.name;
 		          	 if(response.data.page_info.totalPage < 2){
 		          	 	_this.isShow = false;
 		          	 }
 		             console.info(response.data );
 		          }) 	
-			} 
+			},
+			toproduct:function(url,value){
+	  			console.info(value);
+	  			this.$router.push({ path:url,query:{code:value} })
+	  		}  
   }
  
 }
@@ -118,6 +125,9 @@ export default {
 		margin-top: 20px;
 		overflow: hidden;
 	}
+	.brandlist-content ul{
+		overflow: hidden;
+	}
 	.brandlist-content ul li{
 		width: 280px;
 		height:360px ;
@@ -127,6 +137,7 @@ export default {
 	}
 	.brandlist-content ul li img{
 		width: 200px;
+		height: 200px;
 		margin: 20px 40px 40px 20px;
 	}
 </style>

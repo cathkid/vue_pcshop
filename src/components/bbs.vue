@@ -32,7 +32,7 @@
 	 				</div>
 	 				<div class="bbs-list" style="height: 40px;margin-top: 50px;">
 	 					<span>  &nbsp;</span>
-	 					<div class="cancel" @click="back('/index1/home',1)" > CANCEL </div>
+	 					<div class="cancel" @click="backpre()" > CANCEL </div>
 	 					<div class="submit" @click="getinfo()"> SUBMIT </div>
 	 				</div>
 	 		</div> 		
@@ -57,8 +57,11 @@ export default {
    	
     },  
     methods:{
-  	  back:function(url,num){
+  	    back:function(url,num){
   			this.$router.push({ path:url })
+  		},
+  		backpre:function(){
+  			 this.$router.go(-1);
   		},
 	  	getinfo:function(){
 			var _this = this  
@@ -104,7 +107,7 @@ export default {
 	.bbs-box{
 		width: 550px;
 		margin: auto;
-		margin-top: 40px;
+		margin-top: 10px;
 	}
 	.bbs-box h5{
 		text-align: center;
@@ -140,7 +143,7 @@ export default {
 	}
 	.bbs-list select{
 		display: block;
-		height: 30px;
+		height: 35px;
 		width: 390px;
 		float: left;
 	}

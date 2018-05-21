@@ -29,7 +29,7 @@ export default {
   		},
   		toproduct:function(url,value){
 	  			console.info(value);
-	  			this.$router.push({ path:url,query:value })
+	  			this.$router.push({ path:url,query:{code:value} })
 	  	},
 	  	getinfo:function(){
 			var _this = this  
@@ -55,7 +55,7 @@ export default {
 	.categories-box{
 		width: 1366px;
 		min-height: 230px;
-		margin:40px auto;
+		margin:10px auto;
 	}
 	.categories-box li {
 		width: 600px;

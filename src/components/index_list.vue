@@ -7,7 +7,7 @@
 		</div>	 	
 	 	<div class="brandlist-content" >
 	 		<ul>
-	 			<li v-for="item in index_list">
+	 			<li v-for="item in index_list"  @click="toproduct('/index1/product',item.id)">
 	 				<img  v-bind:src='item.img' >
 	 				<!--<h5>JONATHAN ADLER</h5>-->
 	 				<p>{{item.name}}</p>
@@ -45,23 +45,40 @@ export default {
   	getinfo:function(info){
   				console.info(info);
 				var _this = this  
-		        var params = new URLSearchParams() 
-		        params.append('status', '1') 
-		        axios.post('/system/api.php?act=category_goods_list&category_id='+this.$route.query[0]+'&curPage='+info.pageNumber,params)
-		          .then(function (response) {
-		          	 _this.index_list = response.data.goods_list;
-		          	 _this.page_info =  response.data.page_info.totalPage * response.data.page_info.pageSize;
-		          	 _this.pageSet.totalRow = response.data.page_info.totalPage * response.data.page_info.pageSize;
-		             console.info(response.data );
-		              
-		          	 if(response.data.page_info.totalPage < 2){
-		          	 	_this.isShow = false;
-		          	 }
-		          }) 	
-			} 
+				
+				
+				if(this.$route.query.code == 'topic'){
+					var params = new URLSearchParams() 
+			        params.append('status', '1') 
+			        axios.post('/system/api.php?act=item_list&topic_id=1',params)
+			          .then(function (response) {
+			          	_this.index_list = response.data.goods_list;
+			          	_this.isShow = false;
+			          	_this.page_info = response.data.goods_list.length;
+			          }) 
+				}else{ 
+			        var params = new URLSearchParams() 
+			        params.append('status', '1') 
+			        axios.post('/system/api.php?act=category_goods_list&category_id='+this.$route.query.code+'&curPage='+ info.pageNumber,params)
+			          .then(function (response) {
+			          	 _this.index_list = response.data.goods_list;
+			          	 _this.page_info =  response.data.page_info.totalPage * response.data.page_info.pageSize;
+			          	 _this.pageSet.totalRow = response.data.page_info.totalPage * response.data.page_info.pageSize;
+			             console.info(response.data );
+			              
+			          	 if(response.data.page_info.totalPage < 2){
+			          	 	_this.isShow = false;
+			          	 }
+			          }) 
+		         }
+			},
+			toproduct:function(url,value){
+	  			console.info(value);
+	  			this.$router.push({ path:url,query:{code:value} })
+	  		},
   },
    mounted() {
-   		 console.info(this.$route.query[0]); 
+   		 console.info(this.$route.query.code); 
    		 this.getinfo();
   } 
  
@@ -97,6 +114,9 @@ export default {
 		width: 1366px;
 		min-height: 200px;
 		margin-top: 20px;
+		overflow: hidden;
+	}
+	.brandlist-content ul{
 		overflow: hidden;
 	}
 	.brandlist-content ul li{

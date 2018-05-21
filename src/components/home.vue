@@ -22,7 +22,7 @@
   			<h4>HKD $ {{item.price}}</h4>
   		</li>
   	</ul>
-  	<div  @click="back('/index1/index_list')"  class="home-product-more"> MORE </div>
+  	<div  @click="toproduct('/index1/index_list','topic')"  class="home-product-more"> MORE </div>
   </div>
 
 
@@ -53,7 +53,7 @@ export default {
 	  		},
 	  		toproduct:function(url,value){
 	  			console.info(value);
-	  			this.$router.push({ path:url,query:value })
+	  			this.$router.push({ path:url,query:{code:value} })
 	  		},
 		  	getinfo:function(){
 				var _this = this  
