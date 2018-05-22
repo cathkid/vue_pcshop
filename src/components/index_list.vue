@@ -94,7 +94,7 @@ export default {
 		overflow: hidden;
 	}
 	.indexlist-titile{
-		margin-top: 40px;
+		 
 	}
 	.indexlist-titile h5 {
 		text-align: center;

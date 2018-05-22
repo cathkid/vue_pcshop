@@ -1,11 +1,11 @@
 <template>
 <div class="main">
 	 <div class="brand-box">
-	 		<ul class="title"><li v-for="item in brand_key" class="brands_key">{{item}}</li></ul>
+	 		<ul class="title"><li v-for="item in brand_key"  @click="showoff($event,item)"  class="brands_key">{{item}}</li></ul>
 	 
 	 		 <div class="brand-content">
 	 		 	
-	 		 	<div  v-for="item in brand_list"  class="item">
+	 		 	<div  v-for="item in brand_list"  class="item"  ref="showoffBox"  data="item.key" >
 	 		 		<p class="brands_content">{{item.key}}</p>
 	 		 		<ul>
 	 		 			<li v-for="itemlist in item.value"   @click="toproduct('/index1/brand_list',itemlist.id)">{{itemlist.name}}</li>
@@ -36,10 +36,14 @@ export default {
   	  back:function(url,num){
   			this.$router.push({ path:url })
   		},
-  		backfind:function(item){
-  			console.info(item);
-  			console.info(this.$refs.brandlist);
-  		},
+  		showoff:function(event,item){
+  			  for(var i = 0 ; i < this.brand_list.length; i++ ){
+  			 	 if(item == this.$refs.showoffBox[i].childNodes[0].innerHTML){
+  			 	 	console.info(this.$refs.showoffBox[i].offsetTop);
+		 	 		window.scrollTo(0, this.$refs.showoffBox[i].offsetTop -100); 
+  			 	 }
+  			 } 
+		},
   		toproduct:function(url,value){
 	  			console.info(value);
 	  			this.$router.push({ path:url,query:{code:value}})
@@ -58,20 +62,7 @@ export default {
   	}
 }
 
-console.info('sadfasdfas');
-
-var mykey = document.getElementsByClassName('brands_key');
-var mycontent = document.getElementsByClassName('brands_content');
-
  
-mykey.onclick = function(){
-	for(var a = 0; a < mycontent ){
-		
-	}
-	
-	mykey.value
- 
-}
 
 </script>
 
@@ -119,8 +110,6 @@ mykey.onclick = function(){
 		font-size: 18px;
 		cursor: pointer;
 	}
-	
-	
 	.brand-box{
 		width: 1366px;
 		margin: auto;
