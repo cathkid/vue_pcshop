@@ -103,6 +103,7 @@ export default {
 		font-size: 72px;
 		text-align: center;
 		line-height: 160px;
+		overflow: hidden;
 	}
 	.brandlist-title .right{
 		height: 160px;
