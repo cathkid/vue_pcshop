@@ -8,8 +8,9 @@
 				   	  	 <li @click="back('/index1/home',1)"  v-bind:class="{ active: isActive1 }"> NEW</li>
 				   	  	 <li @click="back('/index1/categories',2)" v-bind:class="{ active: isActive2 }"> CATEGORIES</li>
 				   	  	 <li @click="back('/index1/brand',3)"  v-bind:class="{ active: isActive3}"> BRANDS</li>
+				   	  	 <li @click="back('/index1/about',4)"  v-bind:class="{ active: isActive4}"> About CODELAB</li>
 				   	  </ul>
-				   	  <div @click="back('/index1/bbs')" class="service-box">
+				   	  <div @click="back('/index1/bbs',1)" class="service-box">
 				   	  		<p>Customer <br/>Services</p>
 				   	  </div>
 				   </div>
@@ -19,9 +20,9 @@
       
       <div class="footer-box">
       	<ul class="footer-box-center">
-      		 <li @click="back('/index1/about',1)">ABOUT US</li>
-      		 <li>PRIVACY NOTICE</li>
-      		 <li>© 2018 CODELAB, inc.</li>
+      		 <li @click="toproduct('/index1/about',1)">ABOUT US</li>
+      		 <li @click="toproduct('/index1/about',6)">PRIVACY NOTICE</li>
+      		 <li @click="toproduct('/index1/about',5)">© 2018 CODELAB, inc.</li>
       	</ul>
       </div> 
       
@@ -36,29 +37,46 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       isActive1: true,
       isActive2: false,
-      isActive3: false
+      isActive3: false,
+      isActive4: false
     }
   },
   methods:{
   	  back:function(url,num){
-  			this.$router.push({ path:url })
   			localStorage.num = num;
   			if(localStorage.num == 1){
   				this.isActive1=true;
   				this.isActive2=false;
   				this.isActive3=false;
+  				this.isActive4=false;
+  				this.$router.push({ path:url })
   			}
   			if(localStorage.num == 2){
   				this.isActive1=false;
   				this.isActive2=true;
   				this.isActive3=false;
+  				this.isActive4=false;
+  				this.$router.push({ path:url })
   			}
   			if(localStorage.num == 3){
   				this.isActive1=false;
   				this.isActive2=false;
   				this.isActive3=true;
+  				this.isActive4=false;
+  				this.$router.push({ path:url })
   			}
-  		} 
+  			if(localStorage.num == 4){
+  				this.isActive1=false;
+  				this.isActive2=false;
+  				this.isActive3=false;
+  				this.isActive4=true;
+  				this.$router.push({ path:url,query:{code:1} })
+  			}
+  		},
+  		toproduct:function(url,value){
+	  			console.info(value);
+	  			this.$router.push({ path:url,query:{code:value} })
+	  	} 
   },
   mounted(){
   	  	if(localStorage.num == 1){
@@ -75,6 +93,12 @@ export default {
   				this.isActive1=false;
   				this.isActive2=false;
   				this.isActive3=true;
+  			}
+  			if(localStorage.num == 4){
+  				this.isActive1=false;
+  				this.isActive2=false;
+  				this.isActive3=false;
+  				this.isActive4=true;
   			}
   }
 }
@@ -132,6 +156,7 @@ p {
 	position: fixed;
 	background: #fff;
 	top: 0;
+	z-index: 11;
 }
 .head-box-center{
 	 width:1366px;

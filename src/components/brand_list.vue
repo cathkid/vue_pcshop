@@ -139,6 +139,6 @@ export default {
 	.brandlist-content ul li img{
 		width: 200px;
 		height: 200px;
-		margin: 20px 40px 40px 20px;
+		margin: 40px  20px 40px 20px;
 	}
 </style>

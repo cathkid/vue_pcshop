@@ -62,8 +62,8 @@ export default {
 			        axios.post('/system/api.php?act=category_goods_list&category_id='+this.$route.query.code+'&curPage='+ info.pageNumber,params)
 			          .then(function (response) {
 			          	 _this.index_list = response.data.goods_list;
-			          	 _this.page_info =  response.data.page_info.totalPage * response.data.page_info.pageSize;
-			          	 _this.pageSet.totalRow = response.data.page_info.totalPage * response.data.page_info.pageSize;
+			          	 _this.page_info =  response.data.total_num; 
+			          	 _this.pageSet.totalRow = response.data.total_num; 
 			             console.info(response.data );
 			              
 			          	 if(response.data.page_info.totalPage < 2){
@@ -129,6 +129,6 @@ export default {
 	.brandlist-content ul li img{
 		width: 200px;
 		height: 200px;
-		margin: 20px 40px 40px 20px;
+		margin: 40px 20px 40px 20px;
 	}
 </style>

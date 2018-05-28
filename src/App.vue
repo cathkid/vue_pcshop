@@ -35,6 +35,7 @@ p {
  body {
     display: block;
     margin: 0px;
+    font-family: 'arial';
 }
 h4 {
     display: block;

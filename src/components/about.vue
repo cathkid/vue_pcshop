@@ -13,9 +13,12 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       content:'',
+      codeid:1,
     }
   	},
    	mounted() {
+   		this.codeid = this.$route.query.code;
+   		localStorage.aboutid = this.$route.query.code;
    		this.getinfo();
     },  
     methods:{
@@ -26,12 +29,17 @@ export default {
 			var _this = this  
 	        var params = new URLSearchParams() 
 	        params.append('status', '1') 
-	        axios.post('/system/api.php?act=article_detail&article_id=1',params)
+	        axios.post('/system/api.php?act=article_detail&article_id='+this.codeid,params)
 	          .then(function (response) {
 	          	 _this.content = response.data.content;
 	             console.info(response.data );
 	          }) 	
 		} 
+  },
+  watch:{
+   '$route'(to, from){
+   		window.location.reload();
+   	} 
   }
 }
 </script>

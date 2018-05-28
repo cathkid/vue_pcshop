@@ -5,7 +5,7 @@
 	 		 <!-- Swiper -->
 			  <div class="swiper-container">
 			    <div class="swiper-wrapper">
-			      <div class="swiper-slide" v-for="item in product.product" ><div class="img-border"><img v-bind:src='item.img'></div></div>
+			      <div class="swiper-slide" v-for="item in product_list.product" ><div class="img-border"><img v-bind:src='item.img'></div></div>
 			    </div>
 			    <!-- Add Pagination -->
 			    <div class="swiper-pagination"></div>
@@ -15,8 +15,8 @@
 			  </div>
 			  
 			  <div class="choice" v-show="isshow">
-			  	<ul>
-			  		<li v-for="item in product.product">
+			  	<ul >
+			  		<li v-for="item in product_list.product">
 			  			<img v-bind:src='item.img'>
 			  		</li>
 			  	</ul>
@@ -24,31 +24,32 @@
 	 	</div>
 	 	<div class="product-info">
 	 		<div class="title-box">
-	 			<h5>{{product.name}}</h5>
-	 			<p>{{product.brand_name}}</p>
-	 			<p>{{product.goods_supplier_sn}}</p>
+	 			<p>Please come to LANDMARK ATRIUM, experience this product in person.</p>
+	 			<h5>{{product_list.name}}</h5>
+	 			<p>{{product_list.brand_name}}</p>
+	 			<p>{{product_list.goods_supplier_sn}}</p>
 	 		</div>
 	 		<div class="money"> 
-	 			<h5>HKD $ {{product.price}}</h5>
+	 			<h5>HKD $ {{product_list.price}}</h5>
 	 		</div>
-	 		<div class="size">
+	 		<!--<div class="size">
 	 			<img src="../assets/size.png" />
 	 			<span>SIZE & FIT GUIDE</span>
-	 		</div>
+	 		</div>-->
 	 		
 	 		<div class="info-list">
 	 			<h5>DESCRIPTION</h5>
-	 			<P v-html="product.descs"> </P>
+	 			<P v-html="product_list.descs"> </P>
 	 		</div>
 	 		
 	 		<div class="info-list">
 	 			<h5>PRODUCT INFORMATION</h5>
-	 			<P v-html="intraduction_en">  </P>
+	 			<P v-html="product_list.intraduction_en">  </P>
 	 		</div>
 	 		
 	 		<div class="info-list">
 	 			<h5>SHIPPING & RETURN</h5>
-	 			<P v-html="product.shipping_instructions_en"></P>
+	 			<P v-html="product_list.shipping_instructions_en"></P>
 	 		</div>
 	 	</div>
 	 </div>
@@ -63,7 +64,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      product:[],
+      product_list:[],
+      product_list_more:[],
       isshow:true
     }
   },
@@ -95,10 +97,11 @@ export default {
         params.append('status', '1') 
         axios.post('/system/api.php?act=item_detail&item_id='+this.$route.query.code,params)
           .then(function (response) {
-          	 _this.product = response.data;
-          	 if( response.data.product.length = 1){
+          	 _this.product_list = response.data;
+          	 _this.product_list_more = response.data.product;
+          	  if( response.data.product.length == 1){
           	 	_this.isshow = false;
-          	 }
+          	 } 
              console.info(response.data );
              
           }) 	
@@ -246,7 +249,7 @@ export default {
 	}
 	.img-border{
 		margin: 10px 40px 10px 40px;
-	    border: 1px dashed #ea5514;
+	    /*border: 1px dashed #ea5514;*/
 	    height: 356px;
 	}
 </style>

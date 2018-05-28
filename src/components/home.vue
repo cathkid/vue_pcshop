@@ -4,7 +4,7 @@
   <!-- Swiper -->
   <div class="swiper-container">
     <div class="swiper-wrapper">
-        <div v-for="item in bannerlist"  class="swiper-slide" v-bind:style="{ 'background-image': 'url(' + item.img_url + ')','background-repeat':'no-repeat','background-size':'100% 100%' }"> </div>
+        <div v-for="item in bannerlist"  @click="toback(item.link_url)"  class="swiper-slide" v-bind:style="{ 'background-image': 'url(' + item.img_url + ')','background-repeat':'no-repeat','background-size':'100% 100%' }"> </div>
     </div>
     <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
@@ -54,6 +54,9 @@ export default {
 	  		toproduct:function(url,value){
 	  			console.info(value);
 	  			this.$router.push({ path:url,query:{code:value} })
+	  		},
+	  		toback:function(url){
+	  			window.location = url;
 	  		},
 		  	getinfo:function(){
 				var _this = this  
